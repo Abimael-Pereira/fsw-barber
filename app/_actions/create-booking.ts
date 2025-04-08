@@ -1,15 +1,21 @@
 "use server"
 
+import { getServerSession } from "next-auth"
 import { db } from "../_lib/prisma"
+import { authOptions } from "../_lib/auth"
 
 interface CreateBookingProps {
-  userId: string
   serviceId: string
   date: Date
 }
 
 export const createBooking = async (params: CreateBookingProps) => {
+  const user = await getServerSession(authOptions)
+  if (!user) {
+    throw new Error("User not authenticated")
+  }
+
   await db.booking.create({
-    data: params,
+    data: { ...params, userId: (user.user as any)?.id },
   })
 }
