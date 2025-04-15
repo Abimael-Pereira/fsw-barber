@@ -77,7 +77,7 @@ const Home = async () => {
           ))}
         </div>
 
-        <div className="relative mt-6 h-[100px] w-full">
+        <div className="relative mt-6 h-[150px] w-full">
           <Image
             alt="Agende nos melhores com FSW Barber"
             src="/banner-01.png"
@@ -94,7 +94,10 @@ const Home = async () => {
 
             <div className="flex gap-3 overflow-auto [&::-webkit-scrollbar]:hidden">
               {confirmedBookings.map((booking) => (
-                <BookingItem key={booking.id} booking={booking} />
+                <BookingItem
+                  key={booking.id}
+                  booking={JSON.parse(JSON.stringify(booking))}
+                />
               ))}
             </div>
           </>
