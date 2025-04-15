@@ -141,7 +141,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
               alt={service.name}
             />
           </div>
-          <div className="space-y-1">
+          <div className="w-full space-y-1">
             <h3 className="text-sm font-semibold">{service.name}</h3>
             <p className="text-xs text-gray-400">{service.description}</p>
             <div className="flex items-center justify-between gap-4">
