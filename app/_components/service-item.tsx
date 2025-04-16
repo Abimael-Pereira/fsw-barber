@@ -23,6 +23,7 @@ import { getBookings } from "../_actions/get-bookings"
 import { Dialog, DialogContent } from "./ui/dialog"
 import SignInDialog from "./sign-in-dialog"
 import BookingSummary from "./booking-summary"
+import { useRouter } from "next/navigation"
 
 interface ServiceItemProps {
   service: BarberShopService
@@ -43,16 +44,16 @@ const TIME_LIST = [
 
 interface GetTimeListProps {
   booking: Booking[]
-  selectedDate: Date
+  selectedDay: Date
 }
 
-const getTimeList = ({ booking, selectedDate }: GetTimeListProps) => {
+const getTimeList = ({ booking, selectedDay }: GetTimeListProps) => {
   return TIME_LIST.filter((time) => {
     const hour = Number(time.split(":")[0])
     const minutes = Number(time.split(":")[1])
 
     const timeIsOnThePast = isPast(set(new Date(), { hours: hour, minutes }))
-    if (timeIsOnThePast && isToday(selectedDate)) {
+    if (timeIsOnThePast && isToday(selectedDay)) {
       return false
     }
 
@@ -69,8 +70,9 @@ const getTimeList = ({ booking, selectedDate }: GetTimeListProps) => {
 }
 
 const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
-  const [signInDialogIsOpen, setSignInDialogIsOpen] = useState(false)
   const { data } = useSession()
+  const router = useRouter()
+  const [signInDialogIsOpen, setSignInDialogIsOpen] = useState(false)
   const [selectedDay, setSelectedDay] = useState<Date | undefined>(undefined)
   const [selectedTime, setSelectedTime] = useState<string | undefined>(
     undefined,
@@ -134,7 +136,14 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
         date: selectedDate,
       })
       handleBookingSheetOpenChange()
-      toast.success("Agendamento criado com sucesso!")
+      toast.success("Agendamento criado com sucesso!", {
+        action: {
+          label: "Ver agendamentos",
+          onClick: () => {
+            router.push("/bookings")
+          },
+        },
+      })
     } catch (error) {
       toast.error(
         "Ocorreu um erro ao criar o agendamento. Tente novamente mais tarde.",
@@ -143,11 +152,11 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
   }
 
   const timeList = useMemo(() => {
-    if (!selectedDate) {
+    if (!selectedDay) {
       return []
     }
-    return getTimeList({ booking: dayBooking, selectedDate })
-  }, [dayBooking, selectedDate])
+    return getTimeList({ booking: dayBooking, selectedDay })
+  }, [dayBooking, selectedDay])
 
   return (
     <>
@@ -192,7 +201,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                     <Calendar
                       mode="single"
                       locale={ptBR}
-                      selected={selectedDate}
+                      selected={selectedDay}
                       onSelect={handleDateSelect}
                       fromDate={new Date()}
                       styles={{
@@ -221,7 +230,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                     />
                   </div>
 
-                  {selectedDate && (
+                  {selectedDay && (
                     <div className="flex gap-4 overflow-x-auto border-b border-solid p-5 [&::-webkit-scrollbar]:hidden">
                       {timeList.length > 0 ? (
                         timeList.map((time) => (
@@ -244,11 +253,11 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                     </div>
                   )}
 
-                  {selectedDate && (
+                  {selectedDay && (
                     <div className="p-5">
                       <BookingSummary
                         barbershop={barbershop}
-                        selectedDate={selectedDate}
+                        selectedDate={selectedDay}
                         service={service}
                         key={service.id}
                       />
