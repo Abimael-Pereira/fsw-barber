@@ -27,7 +27,9 @@ export default function RootLayout({
               {children}
               <SpeedInsights />
             </div>
-            <Footer />
+            <div className="mt-11 lg:mt-24">
+              <Footer />
+            </div>
           </div>
         </AuthProvider>
         <Toaster />
