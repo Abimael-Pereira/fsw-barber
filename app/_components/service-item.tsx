@@ -194,40 +194,67 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                 </Button>
                 <SheetContent className="overflow-x-auto px-0 [&::-webkit-scrollbar]:hidden">
                   <SheetHeader>
-                    <SheetTitle>Fazer reserva</SheetTitle>
+                    <SheetTitle className="px-5">Fazer reserva</SheetTitle>
                   </SheetHeader>
 
-                  <div className="border-b border-solid py-5">
-                    <Calendar
-                      mode="single"
-                      locale={ptBR}
-                      selected={selectedDay}
-                      onSelect={handleDateSelect}
-                      fromDate={new Date()}
-                      styles={{
-                        head_cell: {
-                          width: "100%",
-                          textTransform: "capitalize",
-                        },
-                        cell: {
-                          width: "100%",
-                        },
-                        button: {
-                          width: "100%",
-                        },
-                        nav_button_previous: {
-                          width: "32px",
-                          height: "32px",
-                        },
-                        nav_button_next: {
-                          width: "32px",
-                          height: "32px",
-                        },
-                        caption: {
-                          textTransform: "capitalize",
-                        },
-                      }}
-                    />
+                  <div className="w-full border-b border-solid py-5">
+                    <div className="w-full">
+                      <Calendar
+                        mode="single"
+                        locale={ptBR}
+                        selected={selectedDay}
+                        onSelect={handleDateSelect}
+                        fromDate={new Date()}
+                        className="w-full [&_div]:w-full" // força todas as divs internas a ocuparem 100%
+                        styles={{
+                          root: {
+                            width: "100%",
+                          },
+                          row: {
+                            display: "grid",
+                            gridTemplateColumns: "repeat(7, 1fr)",
+                            width: "100%",
+                          },
+                          head_row: {
+                            display: "grid",
+                            gridTemplateColumns: "repeat(7, 1fr)",
+                            width: "100%",
+                          },
+                          cell: {
+                            width: "100%",
+                            height: "48px",
+                          },
+                          button: {
+                            width: "100%",
+                            height: "100%",
+                          },
+                          nav: {
+                            display: "flex",
+                            justifyContent: "space-between",
+                          },
+                          nav_button_previous: {
+                            width: "32px",
+                            height: "32px",
+                          },
+                          nav_button_next: {
+                            width: "32px",
+                            height: "32px",
+                          },
+                          caption: {
+                            textTransform: "capitalize",
+                            textAlign: "center", // <-- isso já ajuda
+                            justifyContent: "center", // <-- garante centralização em flex/grid
+                            display: "flex", // <-- necessário para o justify funcionar
+                            width: "100%",
+                          },
+
+                          head_cell: {
+                            textTransform: "capitalize",
+                            textAlign: "center",
+                          },
+                        }}
+                      />
+                    </div>
                   </div>
 
                   {selectedDay && (
@@ -270,6 +297,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                         disabled={!selectedDate || !selectedTime}
                         type="submit"
                         onClick={handleCreateBooking}
+                        className="w-full"
                       >
                         Confirmar
                       </Button>

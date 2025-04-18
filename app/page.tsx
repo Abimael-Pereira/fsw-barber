@@ -33,7 +33,7 @@ const Home = async () => {
           src="/bg-mainpage.jpeg"
           alt="Background"
           fill
-          className="hidden object-cover object-top md:block"
+          className="hidden object-cover object-top grayscale md:block"
         />
         <div className="absolute inset-0 hidden bg-black/70 md:block" />
 
