@@ -37,7 +37,7 @@ const Home = async () => {
         />
         <div className="absolute inset-0 hidden bg-black/70 md:block" />
 
-        <div className="relative z-10 flex h-full items-center px-5 lg:px-32">
+        <div className="relative z-10 flex h-full items-center justify-center px-5 lg:px-32">
           <div className="w-full lg:max-w-2xl">
             <h2 className="text-2xl font-bold text-white">
               Olá, {session?.user ? session.user.name : "faça seu login!"}

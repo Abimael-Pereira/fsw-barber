@@ -65,7 +65,7 @@ const BarbershopPageDesktop = ({ barbershop }: BarbershopPageDesktopProps) => {
         </div>
       </div>
 
-      <div className="">
+      <div>
         <Card className="w-[430px] rounded-xl">
           <CardContent className="p-0">
             <div className="px-5">

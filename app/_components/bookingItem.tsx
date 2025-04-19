@@ -18,20 +18,10 @@ import {
 import Image from "next/image"
 import PhoneItem from "./phone-item"
 import { Button } from "./ui/button"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "./ui/dialog"
-import { DialogClose } from "@radix-ui/react-dialog"
-import { deleteBooking } from "../_actions/delete-booking"
-import { toast } from "sonner"
 import { useState } from "react"
 import BookingSummary from "./booking-summary"
+import { useIsDesktop } from "../_hooks/useIsDesktop"
+import BookingCanceledButton from "./booking-canceled-button"
 
 interface BookingItemProps {
   booking: Prisma.BookingGetPayload<{
@@ -43,25 +33,22 @@ interface BookingItemProps {
       }
     }
   }>
+  onClick?: () => void
 }
 
-const BookingItem = ({ booking }: BookingItemProps) => {
+const BookingItem = ({ booking, onClick }: BookingItemProps) => {
+  const isDesktop = useIsDesktop()
   const [isSheetOpen, setIsSheetOpen] = useState(false)
   const {
     service: { barberShop },
   } = booking
   const isConfirmed = isFuture(booking.date)
-  const handleCancelBooking = async () => {
-    try {
-      await deleteBooking(booking.id)
-      setIsSheetOpen(false)
-      toast.success("Reserva cancelada com sucesso")
-    } catch (error) {
-      console.log(error)
-      toast.error("Erro ao cancelar a reserva")
-    }
-  }
+
   const handleSheetOpenChange = (open: boolean) => {
+    if (isDesktop) {
+      onClick?.()
+      return setIsSheetOpen(false)
+    }
     setIsSheetOpen(open)
   }
   return (
@@ -82,7 +69,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
 
               <div className="flex items-center gap-2">
                 <Avatar className="h-6 w-6">
-                  <AvatarImage src="https://utfs.io/f/c97a2dc9-cf62-468b-a851-bfd2bdde775f-16p.png" />
+                  <AvatarImage src={barberShop.imageUrl} />
                   <AvatarFallback>BS</AvatarFallback>
                 </Avatar>
                 <p className="text-sm">{booking.service.barberShop.name}</p>
@@ -159,38 +146,10 @@ const BookingItem = ({ booking }: BookingItemProps) => {
               </Button>
             </SheetClose>
             {isConfirmed && (
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button variant="destructive" className="w-full">
-                    Cancelar reserva
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="w-[90%]">
-                  <DialogHeader>
-                    <DialogTitle>Cancelar reserva</DialogTitle>
-                    <DialogDescription>
-                      Você tem certeza que deseja cancelar essa reserva? Essa
-                      ação não pode ser desfeita.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <DialogFooter className="flex flex-row gap-3">
-                    <DialogClose asChild>
-                      <Button variant="secondary" className="w-full">
-                        Voltar
-                      </Button>
-                    </DialogClose>
-                    <DialogClose asChild>
-                      <Button
-                        variant="destructive"
-                        className="w-full"
-                        onClick={handleCancelBooking}
-                      >
-                        Confirmar
-                      </Button>
-                    </DialogClose>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
+              <BookingCanceledButton
+                onClick={() => setIsSheetOpen(false)}
+                booking={booking}
+              />
             )}
           </div>
         </SheetFooter>
