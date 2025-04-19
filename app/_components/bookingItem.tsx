@@ -22,6 +22,7 @@ import { useState } from "react"
 import BookingSummary from "./booking-summary"
 import { useIsDesktop } from "../_hooks/useIsDesktop"
 import BookingCanceledButton from "./booking-canceled-button"
+import { useRouter } from "next/navigation"
 
 interface BookingItemProps {
   booking: Prisma.BookingGetPayload<{
@@ -34,26 +35,41 @@ interface BookingItemProps {
     }
   }>
   onClick?: () => void
+  onClickHomePage?: boolean
 }
 
-const BookingItem = ({ booking, onClick }: BookingItemProps) => {
+const BookingItem = ({
+  booking,
+  onClick,
+  onClickHomePage,
+}: BookingItemProps) => {
+  const router = useRouter()
   const isDesktop = useIsDesktop()
   const [isSheetOpen, setIsSheetOpen] = useState(false)
   const {
     service: { barberShop },
   } = booking
   const isConfirmed = isFuture(booking.date)
-
   const handleSheetOpenChange = (open: boolean) => {
     if (isDesktop) {
       onClick?.()
       return setIsSheetOpen(false)
     }
+
     setIsSheetOpen(open)
   }
+  const handleDesktopClick = () => {
+    if (onClickHomePage) {
+      return router.push("/bookings")
+    }
+  }
+
   return (
     <Sheet open={isSheetOpen} onOpenChange={handleSheetOpenChange}>
-      <SheetTrigger className="w-full min-w-[90%]">
+      <SheetTrigger
+        className="w-full min-w-[90%]"
+        onClick={() => handleDesktopClick()}
+      >
         <Card className="min-w-[90%]">
           <CardContent className="flex justify-between p-0">
             <div className="flex flex-col gap-2 py-5 pl-5">
