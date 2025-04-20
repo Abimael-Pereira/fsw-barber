@@ -12,6 +12,13 @@ import { authOptions } from "./_lib/auth"
 import { format } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import { getConfirmedBookings } from "./_data/get-confirmed-bookings"
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "./_components/ui/carousel"
 
 const Home = async () => {
   const session = await getServerSession(authOptions)
@@ -36,7 +43,7 @@ const Home = async () => {
         />
         <div className="absolute inset-0 hidden bg-black/70 md:block" />
 
-        <div className="relative z-10 flex h-full items-center justify-center px-5 lg:px-32">
+        <div className="relative z-10 flex h-full items-center justify-center px-5">
           <div className="w-full lg:max-w-2xl">
             <h2 className="text-2xl font-bold text-white">
               Olá, {session?.user ? session.user.name : "faça seu login!"}
@@ -51,7 +58,7 @@ const Home = async () => {
               </span>
             </p>
 
-            <div className="mt-6 lg:mr-32">
+            <div className="mt-6 hidden lg:mr-32 lg:block">
               <Search />
               {confirmedBookings.length > 0 && (
                 <>
@@ -59,14 +66,26 @@ const Home = async () => {
                     agendamentos
                   </h2>
 
-                  <div className="flex gap-3 overflow-auto [&::-webkit-scrollbar]:hidden">
-                    {confirmedBookings.map((booking) => (
-                      <BookingItem
-                        onClickHomePage={true}
-                        key={booking.id}
-                        booking={JSON.parse(JSON.stringify(booking))}
-                      />
-                    ))}
+                  <div className="flex gap-3">
+                    <Carousel
+                      opts={{
+                        align: "start",
+                      }}
+                      className="w-full"
+                    >
+                      <CarouselContent>
+                        {confirmedBookings.map((booking) => (
+                          <CarouselItem key={booking.id}>
+                            <BookingItem
+                              onClickHomePage={true}
+                              booking={JSON.parse(JSON.stringify(booking))}
+                            />
+                          </CarouselItem>
+                        ))}
+                      </CarouselContent>
+                      <CarouselPrevious />
+                      <CarouselNext />
+                    </Carousel>
                   </div>
                 </>
               )}
@@ -77,11 +96,22 @@ const Home = async () => {
               recomendados
             </h2>
 
-            <div className="flex gap-4 overflow-auto [&::-webkit-scrollbar]:hidden">
-              {barbershops.map((barbershop) => (
-                <BarbershopItem key={barbershop.id} barbershop={barbershop} />
-              ))}
-            </div>
+            <Carousel
+              opts={{
+                align: "start",
+              }}
+              className="w-full"
+            >
+              <CarouselContent className="">
+                {barbershops.map((barbershop) => (
+                  <CarouselItem key={barbershop.id} className="basis-1/3">
+                    <BarbershopItem barbershop={barbershop} />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+            </Carousel>
           </div>
         </div>
       </div>
@@ -154,25 +184,46 @@ const Home = async () => {
             populares
           </h2>
 
-          <div className="flex gap-4 overflow-auto [&::-webkit-scrollbar]:hidden">
-            {popularBarbershops.map((barbershop) => (
-              <BarbershopItem key={barbershop.id} barbershop={barbershop} />
-            ))}
-          </div>
+          <Carousel
+            opts={{
+              align: "start",
+            }}
+            className="w-full"
+          >
+            <CarouselContent>
+              {popularBarbershops.map((barbershop) => (
+                <CarouselItem key={barbershop.id} className="basis-auto">
+                  <BarbershopItem barbershop={barbershop} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
         </div>
 
         {/* Mais visitados */}
-        {/* TODO: Pegar do banco os mais visitados */}
         <div className="mt-10 hidden lg:block">
           <h2 className="mb-3 text-xs font-bold uppercase text-gray-400">
             mais visitados
           </h2>
 
-          <div className="flex gap-4 overflow-auto [&::-webkit-scrollbar]:hidden">
-            {popularBarbershops.map((barbershop) => (
-              <BarbershopItem key={barbershop.id} barbershop={barbershop} />
-            ))}
-          </div>
+          <Carousel
+            opts={{
+              align: "start",
+            }}
+            className="w-full"
+          >
+            <CarouselContent>
+              {popularBarbershops.map((barbershop) => (
+                <CarouselItem key={barbershop.id} className="basis-auto">
+                  <BarbershopItem barbershop={barbershop} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
         </div>
       </div>
     </div>
