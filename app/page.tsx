@@ -32,7 +32,7 @@ const Home = async () => {
 
   return (
     <div>
-      <Header />
+      <Header isHomePage={true} />
       {/* HERO COM IMAGEM DE FUNDO */}
       <div className="relative mt-6 w-full md:mt-0 md:h-[463px]">
         <Image

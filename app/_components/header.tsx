@@ -10,8 +10,13 @@ import SidebarSheet from "./sidebar-sheet"
 import Link from "next/link"
 import LoginButton from "./login-button"
 import { useSession } from "next-auth/react"
+import Search from "./search"
 
-const Header = () => {
+interface HeaderProps {
+  isHomePage?: boolean
+}
+
+const Header = ({ isHomePage }: HeaderProps) => {
   const { data } = useSession()
 
   return (
@@ -20,6 +25,7 @@ const Header = () => {
         <Link href={"/"}>
           <Image src="/logo.png" height={18} width={120} alt="Logo" />
         </Link>
+        <div className="w-[583px] p-11">{isHomePage ? null : <Search />}</div>
         <div className="md:hidden">
           <Sheet>
             <SheetTrigger asChild>
