@@ -10,12 +10,20 @@ import Image from "next/image"
 
 interface BookingSummaryCardProps {
   booking: BookingWithServiceAndBarbershop
+  isBookingCanceled: () => void
 }
 
-const BookingSummaryCard = ({ booking }: BookingSummaryCardProps) => {
+const BookingSummaryCard = ({
+  booking,
+  isBookingCanceled,
+}: BookingSummaryCardProps) => {
   const isConfirmed = isFuture(booking.date)
 
   const { barberShop } = booking.service
+
+  const handleBookingCanceled = () => {
+    isBookingCanceled()
+  }
   return (
     <Card className="w-[430px] rounded-xl">
       <CardContent className="p-0">
@@ -62,7 +70,12 @@ const BookingSummaryCard = ({ booking }: BookingSummaryCardProps) => {
             />
           </div>
           <div className="mb-5">
-            {isConfirmed && <BookingCanceledButton booking={booking} />}
+            {isConfirmed && (
+              <BookingCanceledButton
+                booking={booking}
+                onClick={() => handleBookingCanceled()}
+              />
+            )}
           </div>
         </div>
       </CardContent>

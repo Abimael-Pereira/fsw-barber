@@ -22,6 +22,10 @@ const ResponsivePageBooking = ({
   const handleBookingSelected = (booking: BookingWithServiceAndBarbershop) => {
     setBookingSelected(booking)
   }
+
+  const handleBookingCanceled = () => {
+    setBookingSelected(null)
+  }
   return (
     <>
       <div className="flex justify-center gap-10 p-5">
@@ -63,7 +67,10 @@ const ResponsivePageBooking = ({
         {isDesktop && (
           <div className="mt-[68px]">
             {bookingSelected && (
-              <BookingSummaryCard booking={bookingSelected} />
+              <BookingSummaryCard
+                booking={bookingSelected}
+                isBookingCanceled={() => handleBookingCanceled()}
+              />
             )}
           </div>
         )}
