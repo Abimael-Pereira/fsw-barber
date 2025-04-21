@@ -205,7 +205,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                         selected={selectedDay}
                         onSelect={handleDateSelect}
                         fromDate={new Date()}
-                        className="w-full [&_div]:w-full" // força todas as divs internas a ocuparem 100%
+                        className="w-full [&_div]:w-full"
                         styles={{
                           root: {
                             width: "100%",
@@ -242,9 +242,9 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                           },
                           caption: {
                             textTransform: "capitalize",
-                            textAlign: "center", // <-- isso já ajuda
-                            justifyContent: "center", // <-- garante centralização em flex/grid
-                            display: "flex", // <-- necessário para o justify funcionar
+                            textAlign: "center",
+                            justifyContent: "center",
+                            display: "flex",
                             width: "100%",
                           },
 

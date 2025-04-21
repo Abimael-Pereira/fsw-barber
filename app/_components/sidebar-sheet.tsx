@@ -13,7 +13,7 @@ const SidebarSheet = () => {
   const { data } = useSession()
 
   const handleLogoutClick = () => {
-    signOut()
+    signOut({ callbackUrl: "/" })
   }
 
   return (

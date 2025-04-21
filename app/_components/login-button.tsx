@@ -1,15 +1,20 @@
-import { CircleUserRound, LogInIcon } from "lucide-react"
+import { CircleUserRound, LogInIcon, LogOutIcon } from "lucide-react"
 import SignInDialog from "./sign-in-dialog"
 import { Avatar, AvatarImage } from "./ui/avatar"
 import { Button } from "./ui/button"
 import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog"
 import { Session } from "next-auth"
+import { signOut } from "next-auth/react"
 
 interface LoginButtonProps {
   data: Session | null
 }
 
 const LoginButton = ({ data }: LoginButtonProps) => {
+  const handleLogoutClick = () => {
+    signOut({ callbackUrl: "/" })
+  }
+
   return (
     <div className="flex items-center gap-3 border-b border-solid py-5 md:border-none">
       {data?.user ? (
@@ -18,9 +23,19 @@ const LoginButton = ({ data }: LoginButtonProps) => {
             <AvatarImage src={data.user.image ?? ""} />
           </Avatar>
 
-          <div className="">
+          <div className="mr-2">
             <p className="text-sm font-bold">{data.user.name}</p>
             <p className="text-xs font-light">{data.user.email}</p>
+          </div>
+
+          <div>
+            <Button
+              variant="ghost"
+              className="justify-start"
+              onClick={handleLogoutClick}
+            >
+              <LogOutIcon size={18} />
+            </Button>
           </div>
         </div>
       ) : (

@@ -17,7 +17,6 @@ const ResponsiveBarbershopPage = ({
   barbershop,
 }: BarbershopPageMobileProps) => {
   const isDesktop = useIsDesktop()
-  console.log(isDesktop)
   return (
     <>
       {isDesktop ? (

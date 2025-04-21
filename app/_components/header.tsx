@@ -21,11 +21,19 @@ const Header = ({ isHomePage }: HeaderProps) => {
 
   return (
     <Card>
-      <CardContent className="flex h-[96px] flex-row items-center justify-between p-5 lg:px-32">
+      <CardContent className="flex h-[96px] flex-row items-center justify-between p-5 xl:px-32">
         <Link href={"/"}>
-          <Image src="/logo.png" height={18} width={120} alt="Logo" />
+          <Image
+            src="/logo.png"
+            height={22}
+            width={130}
+            alt="Logo"
+            className="min-w-[130px] max-w-[130px]"
+          />
         </Link>
-        <div className="w-[583px] p-11">{isHomePage ? null : <Search />}</div>
+        <div className="hidden w-full p-11 lg:block">
+          {isHomePage ? null : <Search />}
+        </div>
         <div className="md:hidden">
           <Sheet>
             <SheetTrigger asChild>
@@ -37,12 +45,14 @@ const Header = ({ isHomePage }: HeaderProps) => {
           </Sheet>
         </div>
         <div className="hidden items-center md:flex md:gap-3">
-          <Button className="justify-start gap-2" variant="ghost" asChild>
-            <Link href={"/bookings"}>
-              <CalendarIcon />
-              <span className="text-sm">Agendamentos</span>
-            </Link>
-          </Button>
+          {data?.user && (
+            <Button className="justify-start gap-2" variant="ghost" asChild>
+              <Link href={"/bookings"}>
+                <CalendarIcon />
+                <span className="text-sm">Agendamentos</span>
+              </Link>
+            </Button>
+          )}
           <LoginButton data={data} />
         </div>
       </CardContent>
