@@ -26,10 +26,20 @@
 git clone https://github.com/Abimael-Pereira/fsw-barber.git
 cd fsw-barber
 
+# Instale as dependencias
+
 npm install
 
-# Configure o .env
+# Configure o .env utilizando o .env.example como referência
+
+# Suba o docker-compose e faça o migrate do prisma
 
 npx prisma migrate dev
+
+# Faça a seed do banco de dados
+
+npx prisma db seed
+
+# Inicialize a aplicação
 
 npm run dev
