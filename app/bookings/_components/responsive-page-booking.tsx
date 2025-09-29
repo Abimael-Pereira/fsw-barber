@@ -28,7 +28,7 @@ const ResponsivePageBooking = ({
   }
   return (
     <>
-      <div className="flex justify-center gap-10 p-5">
+      <div className="flex justify-center gap-10 p-5 lg:px-32">
         <div className="space-y-3">
           <h1 className="text-xl font-bold">Agendamentos</h1>
           {confirmedBookings.length === 0 && concludeBookings.length === 0 && (

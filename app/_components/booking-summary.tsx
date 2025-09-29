@@ -7,12 +7,14 @@ interface BookingSummaryProps {
   service: Pick<BarberShopService, "name" | "price">
   barbershop: Pick<BarberShop, "name">
   selectedDate: Date
+  selectedTime?: string
 }
 
 const BookingSummary = ({
   service,
   barbershop,
   selectedDate,
+  selectedTime,
 }: BookingSummaryProps) => {
   return (
     <Card className="w-full">
@@ -38,9 +40,7 @@ const BookingSummary = ({
 
         <div className="flex items-center justify-between">
           <h2 className="text-sm text-gray-400">Horário</h2>
-          <p className="text-sm text-gray-400">
-            {format(selectedDate, "HH:mm")}
-          </p>
+          <p className="text-sm text-gray-400">{selectedTime}</p>
         </div>
 
         <div className="flex items-center justify-between">
