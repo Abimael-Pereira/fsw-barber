@@ -13,15 +13,10 @@ export const authOptions: AuthOptions = {
   ],
   callbacks: {
     async session({ session, user }) {
-      return {
-        ...session,
-        user: {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          image: user.image,
-        },
+      if (session.user) {
+        session.user.id = user.id
       }
+      return session
     },
   },
   secret: process.env.NEXT_AUTH_SECRET,
