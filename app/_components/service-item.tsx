@@ -16,14 +16,13 @@ import { Calendar } from "./ui/calendar"
 import { ptBR } from "date-fns/locale"
 import { useEffect, useMemo, useState } from "react"
 import { isPast, isToday, set } from "date-fns"
-import { createBooking } from "../_actions/create-booking"
-import { toast } from "sonner"
 import { useSession } from "next-auth/react"
 import { getBookings } from "../_actions/get-bookings"
+import { useBookings } from "../_hooks/useBookings"
+import { LoadingSpinner } from "./ui/loading"
 import { Dialog, DialogContent } from "./ui/dialog"
 import SignInDialog from "./sign-in-dialog"
 import BookingSummary from "./booking-summary"
-import { useRouter } from "next/navigation"
 
 interface ServiceItemProps {
   service: BarberShopService
@@ -71,7 +70,7 @@ const getTimeList = ({ booking, selectedDay }: GetTimeListProps) => {
 
 const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
   const { data } = useSession()
-  const router = useRouter()
+  const { createBooking, isPending } = useBookings()
   const [signInDialogIsOpen, setSignInDialogIsOpen] = useState(false)
   const [selectedDay, setSelectedDay] = useState<Date | undefined>(undefined)
   const [selectedTime, setSelectedTime] = useState<string | undefined>(
@@ -127,28 +126,18 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
   }
 
   const handleCreateBooking = async () => {
-    try {
-      if (!selectedDate) {
-        return
-      }
-      await createBooking({
-        serviceId: service.id,
-        date: selectedDate,
-      })
-      handleBookingSheetOpenChange()
-      toast.success("Agendamento criado com sucesso!", {
-        action: {
-          label: "Ver agendamentos",
-          onClick: () => {
-            router.push("/bookings")
-          },
-        },
-      })
-    } catch (error) {
-      toast.error(
-        "Ocorreu um erro ao criar o agendamento. Tente novamente mais tarde.",
-      )
+    if (!selectedDate) {
+      return
     }
+
+    await createBooking({
+      serviceId: service.id,
+      date: selectedDate,
+    })
+
+    // Fechar o sheet apenas se a criação foi bem-sucedida
+    // (o hook já trata os toasts de sucesso/erro)
+    handleBookingSheetOpenChange()
   }
 
   const timeList = useMemo(() => {
@@ -295,12 +284,19 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                   <SheetFooter className="mt-5 px-5">
                     <SheetClose asChild>
                       <Button
-                        disabled={!selectedDate || !selectedTime}
+                        disabled={!selectedDate || !selectedTime || isPending}
                         type="submit"
                         onClick={handleCreateBooking}
                         className="w-full"
                       >
-                        Confirmar
+                        {isPending ? (
+                          <>
+                            <LoadingSpinner size="sm" />
+                            <span className="ml-2">Agendando...</span>
+                          </>
+                        ) : (
+                          "Confirmar"
+                        )}
                       </Button>
                     </SheetClose>
                   </SheetFooter>
