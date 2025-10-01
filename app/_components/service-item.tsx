@@ -276,7 +276,7 @@ const ServiceItem = ({ service, barberShop }: ServiceItemProps) => {
                       <BookingSummary
                         barberShop={barberShop}
                         selectedDate={selectedDay}
-                        selectedTime={selectedTime || ""}
+                        selectedTime={selectedTime}
                         service={service}
                         key={service.id}
                       />

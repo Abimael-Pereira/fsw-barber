@@ -7,7 +7,7 @@ interface BookingSummaryProps {
   service: Pick<BarberShopService, "name" | "price">
   barberShop: Pick<BarberShop, "name">
   selectedDate: Date
-  selectedTime: string
+  selectedTime?: string
 }
 
 const BookingSummary = ({
