@@ -1,6 +1,6 @@
 "use client"
 
-import { BarberShop, BarberShopService, Booking } from "@prisma/client"
+import { BarberShop, BarberShopService } from "@prisma/client"
 import Image from "next/image"
 import { Button } from "./ui/button"
 import { Card, CardContent } from "./ui/card"
@@ -26,7 +26,7 @@ import BookingSummary from "./booking-summary"
 
 interface ServiceItemProps {
   service: BarberShopService
-  barbershop: Pick<BarberShop, "name">
+  barberShop: Pick<BarberShop, "name">
 }
 
 const TIME_LIST = [
@@ -42,7 +42,7 @@ const TIME_LIST = [
 ]
 
 interface GetTimeListProps {
-  booking: Booking[]
+  booking: { id: string; date: Date; userId: string }[]
   selectedDay: Date
 }
 
@@ -68,7 +68,7 @@ const getTimeList = ({ booking, selectedDay }: GetTimeListProps) => {
   })
 }
 
-const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
+const ServiceItem = ({ service, barberShop }: ServiceItemProps) => {
   const { data } = useSession()
   const { createBooking, isPending } = useBookings()
   const [signInDialogIsOpen, setSignInDialogIsOpen] = useState(false)
@@ -76,7 +76,9 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
   const [selectedTime, setSelectedTime] = useState<string | undefined>(
     undefined,
   )
-  const [dayBooking, setDayBooking] = useState<Booking[]>([])
+  const [dayBooking, setDayBooking] = useState<
+    { id: string; date: Date; userId: string }[]
+  >([])
   const [bookingSheetIsOpen, setBookingSheetIsOpen] = useState(false)
 
   useEffect(() => {
@@ -272,9 +274,9 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                   {selectedDay && (
                     <div className="p-5">
                       <BookingSummary
-                        barbershop={barbershop}
+                        barberShop={barberShop}
                         selectedDate={selectedDay}
-                        selectedTime={selectedTime}
+                        selectedTime={selectedTime || ""}
                         service={service}
                         key={service.id}
                       />

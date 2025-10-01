@@ -141,9 +141,10 @@ const BookingItem = ({
 
         <div className="mb-3 mt-6">
           <BookingSummary
-            barbershop={barberShop}
+            barberShop={barberShop}
             service={booking.service}
             selectedDate={booking.date}
+            selectedTime={format(booking.date, "HH:mm")}
             key={booking.service.id}
           />
         </div>

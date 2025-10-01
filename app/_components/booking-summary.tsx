@@ -5,14 +5,14 @@ import { BarberShop, BarberShopService } from "@prisma/client"
 
 interface BookingSummaryProps {
   service: Pick<BarberShopService, "name" | "price">
-  barbershop: Pick<BarberShop, "name">
+  barberShop: Pick<BarberShop, "name">
   selectedDate: Date
-  selectedTime?: string
+  selectedTime: string
 }
 
 const BookingSummary = ({
   service,
-  barbershop,
+  barberShop,
   selectedDate,
   selectedTime,
 }: BookingSummaryProps) => {
@@ -45,7 +45,7 @@ const BookingSummary = ({
 
         <div className="flex items-center justify-between">
           <h2 className="text-sm text-gray-400">Barbearia</h2>
-          <p className="text-sm text-gray-400">{barbershop.name}</p>
+          <p className="text-sm text-gray-400">{barberShop.name}</p>
         </div>
       </CardContent>
     </Card>
