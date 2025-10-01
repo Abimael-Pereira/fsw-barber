@@ -6,12 +6,12 @@ import { authOptions } from "../_lib/auth"
 
 export const getConcludeBookings = async () => {
   const session = await getServerSession(authOptions)
-  if (!session?.user) {
+  if (!session?.user?.id) {
     return []
   }
   return db.booking.findMany({
     where: {
-      userId: (session.user as any).id,
+      userId: session.user.id,
       date: {
         lt: new Date(),
       },
