@@ -1,6 +1,6 @@
-import { toast } from "sonner"
-import { deleteBooking } from "../_actions/delete-booking"
 import { Button } from "./ui/button"
+import { useBookings } from "../_hooks/useBookings"
+import { LoadingSpinner } from "./ui/loading"
 import {
   Dialog,
   DialogClose,
@@ -22,15 +22,14 @@ const BookingCanceledButton = ({
   onClick,
   booking,
 }: BookingCanceledButtonProps) => {
+  const { deleteBooking, isPending } = useBookings()
+
   const handleCancelBooking = async () => {
-    try {
-      await deleteBooking(booking.id)
-      if (onClick) {
-        onClick()
-      }
-      toast.success("Reserva cancelada com sucesso")
-    } catch (error) {
-      toast.error("Erro ao cancelar a reserva")
+    await deleteBooking(booking.id)
+    // Fechar apenas se a operação foi bem-sucedida
+    // (o hook já trata os toasts de sucesso/erro)
+    if (onClick) {
+      onClick()
     }
   }
   return (
@@ -59,8 +58,16 @@ const BookingCanceledButton = ({
               variant="destructive"
               className="w-full"
               onClick={handleCancelBooking}
+              disabled={isPending}
             >
-              Confirmar
+              {isPending ? (
+                <>
+                  <LoadingSpinner size="sm" />
+                  <span className="ml-2">Cancelando...</span>
+                </>
+              ) : (
+                "Confirmar"
+              )}
             </Button>
           </DialogClose>
         </DialogFooter>
