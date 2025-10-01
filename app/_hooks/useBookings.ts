@@ -1,10 +1,10 @@
 "use client"
 
 import { useTransition } from "react"
-import { toast } from "sonner"
 import { createBooking } from "../_actions/create-booking"
 import { deleteBooking } from "../_actions/delete-booking"
 import { CreateBookingInput } from "../_schemas"
+import { showToast } from "../_lib/toast"
 
 export const useBookings = () => {
   const [isPending, startTransition] = useTransition()
@@ -13,11 +13,18 @@ export const useBookings = () => {
     startTransition(async () => {
       try {
         await createBooking(data)
-        toast.success("Agendamento realizado com sucesso!")
+        showToast.booking.created()
       } catch (error) {
-        const message =
-          error instanceof Error ? error.message : "Erro ao agendar"
-        toast.error(message)
+        const message = error instanceof Error ? error.message : ""
+
+        // Tratamento específico de erros
+        if (message.includes("já ocupado")) {
+          showToast.booking.conflictError()
+        } else if (message.includes("não autenticado")) {
+          showToast.booking.authError()
+        } else {
+          showToast.booking.genericError()
+        }
       }
     })
   }
@@ -26,11 +33,15 @@ export const useBookings = () => {
     startTransition(async () => {
       try {
         await deleteBooking(bookingId)
-        toast.success("Agendamento cancelado com sucesso!")
+        showToast.booking.deleted()
       } catch (error) {
-        const message =
-          error instanceof Error ? error.message : "Erro ao cancelar"
-        toast.error(message)
+        const message = error instanceof Error ? error.message : ""
+
+        if (message.includes("não autenticado")) {
+          showToast.auth.loginRequired()
+        } else {
+          showToast.error("Erro ao cancelar agendamento")
+        }
       }
     })
   }
