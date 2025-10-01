@@ -16,6 +16,8 @@ const BookingSummary = ({
   selectedDate,
   selectedTime,
 }: BookingSummaryProps) => {
+  console.log(barberShop)
+
   return (
     <Card className="w-full">
       <CardContent className="space-y-3 p-3">

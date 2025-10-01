@@ -26,7 +26,7 @@ const BarberShopPage = async ({ params }: BarberShopPageProps) => {
   return (
     <div>
       <Header />
-      <ResponsiveBarbershopPage barbershop={barbershop} />
+      <ResponsiveBarbershopPage barberShop={barbershop} />
     </div>
   )
 }

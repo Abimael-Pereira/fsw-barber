@@ -7,7 +7,7 @@ import { MapPin, StarIcon } from "lucide-react"
 import Image from "next/image"
 
 interface BarbershopPageDesktopProps {
-  barbershop: Prisma.BarberShopGetPayload<{
+  barberShop: Prisma.BarberShopGetPayload<{
     include: {
       services: true
     }
@@ -24,23 +24,23 @@ const WEEK_OPEN = [
   { day: "sábado", hours: "Fechado" },
 ]
 
-const BarbershopPageDesktop = ({ barbershop }: BarbershopPageDesktopProps) => {
+const BarbershopPageDesktop = ({ barberShop }: BarbershopPageDesktopProps) => {
   return (
     <div className="flex justify-center gap-10 px-32 pt-10">
       <div className="max-w-[758px]">
         <Image
-          src={barbershop.imageUrl}
-          alt={barbershop.name}
+          src={barberShop.imageUrl}
+          alt={barberShop.name}
           width={758}
           height={486}
           className="rounded-lg object-cover"
         />
         <div className="mt-5 flex items-center justify-between">
           <div className="flex flex-col gap-3">
-            <h1 className="text-3xl font-bold">{barbershop.name}</h1>
+            <h1 className="text-3xl font-bold">{barberShop.name}</h1>
             <div className="flex items-center text-sm">
               <MapPin size={18} className="mr-2 text-primary" />
-              <p>{barbershop.address}</p>
+              <p>{barberShop.address}</p>
             </div>
           </div>
           <div className="flex h-[68px] w-[121px] flex-col items-center justify-center gap-1 rounded-lg bg-secondary">
@@ -55,11 +55,11 @@ const BarbershopPageDesktop = ({ barbershop }: BarbershopPageDesktopProps) => {
           Serviços
         </h2>
         <div className="grid grid-cols-2 gap-5 pt-3">
-          {barbershop.services.map((service) => (
+          {barberShop.services.map((service) => (
             <ServiceItem
               key={service.id}
               service={JSON.parse(JSON.stringify(service))}
-              barbershop={JSON.parse(JSON.stringify(barbershop))}
+              barberShop={JSON.parse(JSON.stringify(barberShop))}
             />
           ))}
         </div>
@@ -71,7 +71,7 @@ const BarbershopPageDesktop = ({ barbershop }: BarbershopPageDesktopProps) => {
             <div className="px-5">
               <div className="relative mt-6 flex h-[180px] w-full items-end">
                 <Image
-                  alt={`Mapa da barbearia ${barbershop.name}`}
+                  alt={`Mapa da barbearia ${barberShop.name}`}
                   src="/map.png"
                   fill
                   className="rounded-xl object-cover"
@@ -79,22 +79,22 @@ const BarbershopPageDesktop = ({ barbershop }: BarbershopPageDesktopProps) => {
                 <Card className="z-50 mx-5 mb-3 w-full rounded-xl">
                   <CardContent className="flex items-center gap-3 px-5 py-3">
                     <Avatar>
-                      <AvatarImage src={barbershop.imageUrl} />
+                      <AvatarImage src={barberShop.imageUrl} />
                     </Avatar>
                     <div>
-                      <h3 className="font-bold">{barbershop.name}</h3>
-                      <p className="text-xs">{barbershop.address}</p>
+                      <h3 className="font-bold">{barberShop.name}</h3>
+                      <p className="text-xs">{barberShop.address}</p>
                     </div>
                   </CardContent>
                 </Card>
               </div>
               <h2 className="mt-5 text-sm font-bold uppercase">sobre nós</h2>
               <p className="mt-2 text-sm text-gray-400">
-                {barbershop.description}
+                {barberShop.description}
               </p>
 
               <div className="mt-5 space-y-2 border-b border-t border-solid py-5">
-                {barbershop.phones.map((phone, index) => (
+                {barberShop.phones.map((phone, index) => (
                   <PhoneItem phone={phone} key={index} />
                 ))}
               </div>

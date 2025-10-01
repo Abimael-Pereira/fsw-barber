@@ -106,7 +106,7 @@ const Home = async () => {
               <CarouselContent className="">
                 {barbershops.map((barbershop) => (
                   <CarouselItem key={barbershop.id} className="basis-1/3">
-                    <BarbershopItem barbershop={barbershop} />
+                    <BarbershopItem barberShop={barbershop} />
                   </CarouselItem>
                 ))}
               </CarouselContent>
@@ -205,7 +205,7 @@ const Home = async () => {
             <CarouselContent>
               {barbershops.map((barbershop) => (
                 <CarouselItem key={barbershop.id} className="basis-auto">
-                  <BarbershopItem barbershop={barbershop} />
+                  <BarbershopItem barberShop={barbershop} />
                 </CarouselItem>
               ))}
             </CarouselContent>
@@ -229,7 +229,7 @@ const Home = async () => {
             <CarouselContent>
               {popularBarbershops.map((barbershop) => (
                 <CarouselItem key={barbershop.id} className="basis-auto">
-                  <BarbershopItem barbershop={barbershop} />
+                  <BarbershopItem barberShop={barbershop} />
                 </CarouselItem>
               ))}
             </CarouselContent>
@@ -253,7 +253,7 @@ const Home = async () => {
             <CarouselContent>
               {popularBarbershops.map((barbershop) => (
                 <CarouselItem key={barbershop.id} className="basis-auto">
-                  <BarbershopItem barbershop={barbershop} />
+                  <BarbershopItem barberShop={barbershop} />
                 </CarouselItem>
               ))}
             </CarouselContent>

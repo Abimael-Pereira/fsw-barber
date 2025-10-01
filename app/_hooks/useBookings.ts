@@ -17,7 +17,6 @@ export const useBookings = () => {
       } catch (error) {
         const message = error instanceof Error ? error.message : ""
 
-        // Tratamento específico de erros
         if (message.includes("já ocupado")) {
           showToast.booking.conflictError()
         } else if (message.includes("não autenticado")) {

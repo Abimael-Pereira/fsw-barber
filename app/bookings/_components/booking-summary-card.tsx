@@ -64,8 +64,13 @@ const BookingSummaryCard = ({
               {isConfirmed ? "Confirmado" : "Finalizado"}
             </Badge>
             <BookingSummary
-              barbershop={barberShop}
+              barberShop={barberShop}
               selectedDate={booking.date}
+              selectedTime={booking.date.toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+              key={booking.service.id}
               service={booking.service}
             />
           </div>

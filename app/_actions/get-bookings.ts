@@ -6,10 +6,8 @@ import { getBookingsSchema, type GetBookingsInput } from "../_schemas"
 
 export const getBookings = async (params: GetBookingsInput) => {
   try {
-    // Validar dados de entrada
     const validatedData = getBookingsSchema.parse(params)
 
-    // Verificar se o serviço existe
     const service = await db.barberShopService.findUnique({
       where: { id: validatedData.serviceId },
       select: { id: true },
@@ -19,7 +17,6 @@ export const getBookings = async (params: GetBookingsInput) => {
       throw new Error("Serviço não encontrado")
     }
 
-    // Buscar bookings do dia para o serviço específico
     const bookings = await db.booking.findMany({
       where: {
         serviceId: validatedData.serviceId,

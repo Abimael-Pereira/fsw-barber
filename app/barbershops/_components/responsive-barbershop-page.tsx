@@ -6,7 +6,7 @@ import { useIsDesktop } from "@/app/_hooks/useIsDesktop"
 import BarbershopPageDesktop from "./barbershop-page-desktop"
 
 interface BarbershopPageMobileProps {
-  barbershop: Prisma.BarberShopGetPayload<{
+  barberShop: Prisma.BarberShopGetPayload<{
     include: {
       services: true
     }
@@ -14,15 +14,15 @@ interface BarbershopPageMobileProps {
 }
 
 const ResponsiveBarbershopPage = ({
-  barbershop,
+  barberShop,
 }: BarbershopPageMobileProps) => {
   const isDesktop = useIsDesktop()
   return (
     <>
       {isDesktop ? (
-        <BarbershopPageDesktop barbershop={barbershop} />
+        <BarbershopPageDesktop barberShop={barberShop} />
       ) : (
-        <BarbershopPageMobile barbershop={barbershop} />
+        <BarbershopPageMobile barberShop={barberShop} />
       )}
     </>
   )

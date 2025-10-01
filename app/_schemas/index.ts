@@ -15,12 +15,10 @@ export const getBookingsSchema = z.object({
   date: z.date(),
 })
 
-// Type inference para melhor developer experience
 export type CreateBookingInput = z.infer<typeof createBookingSchema>
 export type DeleteBookingInput = z.infer<typeof deleteBookingSchema>
 export type GetBookingsInput = z.infer<typeof getBookingsSchema>
 
-// Schema para validação de usuário autenticado
 export const authenticatedUserSchema = z.object({
   id: z.string().min(1, "ID do usuário é obrigatório"),
   name: z.string().nullable().optional(),
