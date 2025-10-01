@@ -37,3 +37,8 @@ next-env.d.ts
 
 .env
 .postgres-data
+
+# Chat mode rules (should not be tracked)
+*.chatmode
+*.chatmode.md
+.github/chatmodes/
