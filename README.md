@@ -268,19 +268,19 @@ docker-compose down  # Parar containers
 
 ### Página Inicial
 
-![Homepage](./docs/homepage.png)
+![Homepage](./docs/home-page.png)
 
 ### Detalhes da Barbearia
 
-![Barbershop Details](./docs/barbershop-details.png)
+![Barbershop Details](./docs/barber-shop-details.png)
 
-### Sistema de Agendamento
+### Agendamentos
 
-![Booking System](./docs/booking-system.png)
+![Booking](./docs/booking.png)
 
-### Área do Cliente
+### Detalhes do Agendamento
 
-![Client Area](./docs/client-area.png)
+![Booking Details](./docs/booking-details.png)
 
 </div>
 
@@ -402,19 +402,6 @@ Este é um **projeto acadêmico/portfólio** desenvolvido para demonstrar habili
 - GitHub: [@Abimael-Pereira](https://github.com/Abimael-Pereira)
 - LinkedIn: [Abimael Pereira](https://www.linkedin.com/in/abimaelpereira)
 - Email: abimael.spdev@gmail.com
-
----
-
-## 🙏 Agradecimentos
-
-- [Next.js](https://nextjs.org/) - Framework React de produção
-- [Tailwind CSS](https://tailwindcss.com/) - Framework CSS utilitário
-- [shadcn/ui](https://ui.shadcn.com/) - Componentes UI modernos
-- [Prisma](https://prisma.io/) - ORM type-safe para Node.js
-- [NextAuth.js](https://next-auth.js.org/) - Autenticação para Next.js
-- [Vercel](https://vercel.com/) - Plataforma de deploy e hospedagem
-- [Radix UI](https://radix-ui.com/) - Primitivos de UI acessíveis
-- [Lucide](https://lucide.dev/) - Biblioteca de ícones moderna
 
 ---
 
